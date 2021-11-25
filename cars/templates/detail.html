@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+ 
+{% block content %}
+<!--Carousel Wrapper-->
+<div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+    {% for p in photos %}
+      <li data-target="#carousel-example-1z" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
+    {% endfor %}
+    </ol>
+    <!--/.Indicators-->
+    <!--Slides-->
+    <div class="carousel-inner" role="listbox">
+      {% for p in photos %}
+      <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %}">
+        {% load thumbnail %}
+        {% thumbnail p.image "1000x600" crop="center" upscale=True as im %}
+            <img class="d-block w-100" src="{{im.url}}"
+            alt="First slide">
+        {% endthumbnail %}
+      </div>
+      {% endfor %}
+      <!--/First slide-->
+    <!--/.Slides-->
+    <!--Controls-->
+    <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+    <!--/.Controls-->
+  </div>
+</div>
+Модель: {{post.title}}
+<br>
+<a href="{{post.link}}">Ссылка</a>
+<br>
+Стоимость: {{post.price}} руб.
+<br>
+Год: {{post.year}}
+<br>
+<div>
+    Комплектации:
+    <ul>
+    {% for eq in equipment %}
+        <li>{{eq.name}}</li>
+            {{eq.text}} 
+    {% endfor %}
+    </ul>
+</div>
+
+<div>
+    Цвета:
+    <ul>
+        {% for c in color %}
+        <li>{{c.name}}
+            <svg width="10" height="10">
+                <circle cx="5" cy="5" r="5" fill={{c.color}} />
+            </svg>
+        </li>
+        {% endfor %}
+    </ul>
+</div>    
+
+<div class="card">
+    <div class="card-body">
+        <a href="{% url 'contact' post.pk %}" class="btn btn-primary btn-md">Приобрести</a>
+    </div>
+</div>
+{% endblock %}
