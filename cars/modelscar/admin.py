@@ -6,8 +6,10 @@ from .models import Color, Cars, Equipment, ImageCar
 admin.site.register(Color)
 admin.site.register(Equipment)
 
+
 class ImageCarAdmin(admin.StackedInline):
     model = ImageCar
+
 
 @admin.register(Cars)
 class CarsAdmin(admin.ModelAdmin):
@@ -24,7 +26,8 @@ class CarsAdmin(admin.ModelAdmin):
         'year')
 
     class Meta:
-       model = Cars
+        model = Cars
+
 
 @admin.register(ImageCar)
 class ImageCarAdmin(admin.ModelAdmin):
